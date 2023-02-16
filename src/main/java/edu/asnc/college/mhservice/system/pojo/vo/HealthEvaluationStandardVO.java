@@ -9,6 +9,7 @@ public class HealthEvaluationStandardVO implements Serializable {
     private long id;
     private String account;
     private String name;
+    private String department;
     private String gender;
     private String age;
     private String physicalEvaluation;

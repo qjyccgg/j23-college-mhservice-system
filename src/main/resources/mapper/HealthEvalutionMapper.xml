@@ -77,39 +77,65 @@
     </select>
 
 
-    <!-- int countByPhone(String phone); -->
-    <select id="countByPhone" resultType="int">
-        SELECT count(*) FROM admin WHERE phone=#{phone}
+    <!-- int countByDepartment(String phone); -->
+    <select id="countByDepartment" resultType="int">
+        SELECT count(*) FROM heahlth_evaluation WHERE countByDepartment=#{countByDepartment}
     </select>
 
-    <!-- int countByEmail(String email); -->
-    <select id="countByEmail" resultType="int">
-        SELECT count(*) FROM admin WHERE email=#{email}
+    <select id="standard" resultMap="StandardResultMap">
+        SELECT
+        <include refid="StandardQueryFields"/>
+        FROM
+        health_evaluation
+        WHERE
+        id=#{id}
     </select>
+
+    <sql id="StandardQueryFields">
+        <if test="true">
+            id, account,name ,gender, age, physicalEvaluation,
+            suggestion,evaluationTime,comprehensiveEvaluation
+        </if>
+    </sql>
+    <resultMap id="StandardResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.HealthEvaluationStandardVO">
+        <id column="id" property="id"/>
+        <result column="account" property="account"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="age" property="age"/>
+        <result column="physical_evaluation" property="physicalEvaluation"/>
+        <result column="suggestion" property="suggestion"/>
+        <result column="evaluation_time" property="evaluationTime"/>
+        <result column="comprehensive_evaluation" property="comprehensive_evaluation"/>
+    </resultMap>
+
 
     <select id="list" resultMap="ListResultMap">
         SELECT
         <include refid="ListQueryFields"/>
         FROM
-        admin
+        health_evaluation
         ORDER BY
         id
     </select>
 
     <sql id="ListQueryFields">
         <if test="true">
-            id, username, role, avatar, phone,
-            email
+            id, account,name ,gender, age, physicalEvaluation,
+            suggestion,evaluationTime,comprehensiveEvaluation
         </if>
     </sql>
 
-    <resultMap id="ListResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.AdminListItemVO">
+    <resultMap id="ListResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.HealthEvaluationListItemVO">
         <id column="id" property="id"/>
-        <result column="username" property="username"/>
-        <result column="role" property="role"/>
-        <result column="avatar" property="avatar"/>
-        <result column="phone" property="phone"/>
-        <result column="email" property="email"/>
+        <result column="account" property="account"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="age" property="age"/>
+        <result column="physical_evaluation" property="physicalEvaluation"/>
+        <result column="suggestion" property="suggestion"/>
+        <result column="evaluation_time" property="evaluationTime"/>
+        <result column="comprehensive_evaluation" property="comprehensive_evaluation"/>
     </resultMap>
 
 

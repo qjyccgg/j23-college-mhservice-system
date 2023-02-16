@@ -11,6 +11,96 @@
         )
     </insert>
 
+    <insert id="insertBatch">
+        INSERT INTO student (
+            name, account,password,department,gender,age,avatar,email,phone
+        ) VALUES
+        <foreach collection="list" item="student" separator=",">
+            (
+            #{student.name},#{student.account},#{student.password},
+             #{student.department},#{student.gender},#{student.age},
+             #{student.avatar},#{student.email},#{student.phone}
+            )
+        </foreach>
+
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM student WHERE id=#{id};
+    </delete>
+
+    <update id="updateByAccount">
+        UPDATE student
+        <set>
+            <if test="name != null"> name=#{name}</if>
+            <if test="password != null"> password=#{password}</if>
+            <if test="department != null"> department=#{department}</if>
+            <if test="gender != null"> gender=#{gender}</if>
+            <if test="age != null"> age=#{age}</if>
+            <if test="avatar != null"> avatar=#{avatar}</if>
+            <if test="email != null"> email=#{email}</if>
+            <if test="phone != null"> phone=#{phone}</if>
+        </set>
+        WHERE account=#{account}
+    </update>
+
+    <!-- int count(); -->
+    <select id="count" resultType="int">
+        SELECT count(*) FROM student
+    </select>
+
+    <select id="getStandardByAccount" resultMap="StandardResultMap">
+        SELECT
+        <include refid="StandardQueryFields"/>
+        FROM
+        student
+        WHERE account=#{account}
+    </select>
+
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+        student
+        ORDER BY
+        account, id DESC
+    </select>
+
+    <sql id="StandardQueryFields">
+        id,name,account,password,department,gender,age,
+        avatar,email,phone
+    </sql>
+
+    <resultMap id="StandardResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.StudentStandardVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="account" property="account"/>
+        <result column="password" property="password"/>
+        <result column="department" property="gender"/>
+        <result column="gender" property="gender"/>
+        <result column="age" property="age"/>
+        <result column="avatar" property="avatar"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+    </resultMap>
+
+    <sql id="ListQueryFields">
+        id,name,account,password,department,gender,age,
+        avatar,email,phone
+    </sql>
+
+    <resultMap id="ListResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.StudentListItemVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="account" property="account"/>
+        <result column="password" property="password"/>
+        <result column="department" property="gender"/>
+        <result column="gender" property="gender"/>
+        <result column="age" property="age"/>
+        <result column="avatar" property="avatar"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+    </resultMap>
 
 
 </mapper>

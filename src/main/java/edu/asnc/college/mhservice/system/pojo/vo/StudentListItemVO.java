@@ -1,13 +1,11 @@
-package edu.asnc.college.mhservice.system.pojo.entity;
+package edu.asnc.college.mhservice.system.pojo.vo;
 
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Data
-public class Student implements Serializable {
-
+public class StudentListItemVO implements Serializable {
     /**
      * 学生id
      */
@@ -48,13 +46,6 @@ public class Student implements Serializable {
      * 手机号码
      */
     private String phone;
-    /**
-     * 数据创建时间
-     */
-    private LocalDateTime createTime;
-    /**
-     * 数据最后修改时间
-     */
-    private LocalDateTime gmtModified;
+
 
 }

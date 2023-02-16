@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.asnc.college.mhservice.system.mapper.HealthEvaluationMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO health_evaluation (
+            account, name , gender, age,physicalEvaluation,
+            suggestion,evaluationTime,comprehensiveEvaluation
+        ) VALUES (
+                     #{account}, #{name}, #{gender}, #{age},#{physicalEvaluation},
+                     #{suggestion},#{evaluationTime},#{comprehensiveEvaluation}
+                 )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO health_evaluation (
+        account, name , gender, age,physicalEvaluation,
+        suggestion,evaluationTime,comprehensiveEvaluation
+        ) VALUES
+        <foreach collection="list" item="he" separator=",">
+            (
+            #{he.account}, #{he.name}, #{he.gender}, #{he.age},#{he.physicalEvaluation},
+            #{he.suggestion},#{he.evaluationTime},#{he.comprehensiveEvaluation}
+            )
+        </foreach>
+
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM health_evaluation WHERE id=#{id}
+    </delete>
+
+    <delete id="deleteByIds">
+        DELETE FROM health_evaluation WHERE id IN (
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <!-- int update(Admin admin); -->
+    <update id="update">
+        UPDATE admin
+        <set>
+            <if test="account != null">
+                account=#{account},
+            </if>
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="gender != null">
+                gender=#{gender},
+            </if>
+            <if test="age != null">
+                age=#{age},
+            </if>
+            <if test="physicalEvaluation != null">
+                physical_evaluation=#{physicalEvaluation},
+            </if>
+            <if test="suggestion != null">
+                suggestion=#{suggestion},
+            </if>
+            <if test="evaluationTime != null">
+                evaluation_time=#{evaluationTime},
+            </if>
+            <if test="comprehensiveEvaluation != null">
+                comprehensive_evaluation=#{comprehensiveEvaluation},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!-- int count(); -->
+    <select id="count" resultType="int">
+        SELECT count(*) FROM health_evaluation
+    </select>
+
+
+    <!-- int countByPhone(String phone); -->
+    <select id="countByPhone" resultType="int">
+        SELECT count(*) FROM admin WHERE phone=#{phone}
+    </select>
+
+    <!-- int countByEmail(String email); -->
+    <select id="countByEmail" resultType="int">
+        SELECT count(*) FROM admin WHERE email=#{email}
+    </select>
+
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+        admin
+        ORDER BY
+        id
+    </select>
+
+    <sql id="ListQueryFields">
+        <if test="true">
+            id, username, role, avatar, phone,
+            email
+        </if>
+    </sql>
+
+    <resultMap id="ListResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.AdminListItemVO">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="role" property="role"/>
+        <result column="avatar" property="avatar"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+    </resultMap>
+
+
+</mapper>

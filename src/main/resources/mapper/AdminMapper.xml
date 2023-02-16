@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.asnc.college.mhservice.system.mapper.AdminMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO admin (
+            username, password, role, avatar,phone, email
+        ) VALUES (
+                     #{username}, #{password}, #{role}, #{avatar},#{phone},
+                     #{email}
+                 )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO admin (
+        username, password, role, avatar,phone, email
+        ) VALUES
+        <foreach collection="list" item="admin" separator=",">
+            (
+            #{admin.username}, #{admin.password}, #{admin.role}, #{admin.avatar},
+             #{admin.phone},#{admin.email}
+            )
+        </foreach>
+
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM admin WHERE id=#{id}
+    </delete>
+
+    <delete id="deleteByIds">
+        DELETE FROM admin WHERE id IN (
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <!-- int update(Admin admin); -->
+    <update id="update">
+        UPDATE admin
+        <set>
+            <if test="username != null">
+                username=#{username},
+            </if>
+            <if test="password != null">
+                password=#{password},
+            </if>
+            <if test="role != null">
+                role=#{role},
+            </if>
+            <if test="avatar != null">
+                avatar=#{avatar},
+            </if>
+            <if test="phone != null">
+                phone=#{phone},
+            </if>
+            <if test="email != null">
+                email=#{email},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!-- int count(); -->
+    <select id="count" resultType="int">
+        SELECT count(*) FROM admin
+    </select>
+
+    <!-- int countByUsername(String username); -->
+    <select id="countByUsername" resultType="int">
+        SELECT count(*) FROM admin WHERE username=#{username}
+    </select>
+
+    <!-- int countByPhone(String phone); -->
+    <select id="countByPhone" resultType="int">
+        SELECT count(*) FROM admin WHERE phone=#{phone}
+    </select>
+
+    <!-- int countByEmail(String email); -->
+    <select id="countByEmail" resultType="int">
+        SELECT count(*) FROM admin WHERE email=#{email}
+    </select>
+
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+        admin
+        ORDER BY
+        id
+    </select>
+
+    <sql id="ListQueryFields">
+        <if test="true">
+            id, username, role, avatar, phone,
+            email
+        </if>
+    </sql>
+
+    <resultMap id="ListResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.AdminListItemVO">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="role" property="role"/>
+        <result column="avatar" property="avatar"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+    </resultMap>
+
+
+</mapper>

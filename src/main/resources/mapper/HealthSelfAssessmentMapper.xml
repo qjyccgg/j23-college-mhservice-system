@@ -1,47 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="edu.asnc.college.mhservice.system.mapper.HealthEvaluationMapper">
+<mapper namespace="edu.asnc.college.mhservice.system.mapper.HealthSelfAssessmentMapper">
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO health_evaluation (
-            account, name , gender, age,physical_evaluation,
-            suggestion,evaluation_time,comprehensive_evaluation
+        INSERT INTO health_self_assessment (
+            account, name ,avatar, gender, age,
+            height,weight,bloodPressure,heartRate,
+            measurement_time,recent_diet
         ) VALUES (
-                     #{account}, #{name}, #{gender}, #{age},#{physicalEvaluation},
-                     #{suggestion},#{evaluationTime},#{comprehensiveEvaluation}
+            #{account}, #{name}, #{avatar}, #{gender},#{age},
+            #{height},#{weight},#{blood_pressure},#{heart_rate},
+            #{measurementTime},#{recentDiet}
                  )
     </insert>
 
-    <insert id="insertBatch">
-        INSERT INTO health_evaluation (
-        account, name , gender, age,physical_evaluation,
-        suggestion,evaluation_time,comprehensive_evaluation
-        ) VALUES
-        <foreach collection="list" item="he" separator=",">
-            (
-            #{he.account}, #{he.name}, #{he.gender}, #{he.age},#{he.physicalEvaluation},
-            #{he.suggestion},#{he.evaluationTime},#{he.comprehensiveEvaluation}
-            )
-        </foreach>
-
-    </insert>
 
     <delete id="deleteById">
-        DELETE FROM health_evaluation WHERE id=#{id}
+        DELETE FROM health_self_assessment WHERE id=#{id}
     </delete>
 
     <delete id="deleteByIds">
-        DELETE FROM health_evaluation WHERE id IN (
+        DELETE FROM health_self_assessment WHERE id IN (
         <foreach collection="array" item="id" separator=",">
             #{id}
         </foreach>
         )
     </delete>
 
-    <!-- int update(Admin admin); -->
     <update id="update">
-        UPDATE admin
+        UPDATE health_self_assessment
         <set>
             <if test="account != null">
                 account=#{account},
@@ -52,20 +40,29 @@
             <if test="gender != null">
                 gender=#{gender},
             </if>
+            <if test="avatar != null">
+                avatar=#{avatar},
+            </if>
             <if test="age != null">
                 age=#{age},
             </if>
-            <if test="physicalEvaluation != null">
-                physical_evaluation=#{physicalEvaluation},
+            <if test="height != null">
+                height=#{height},
             </if>
-            <if test="suggestion != null">
-                suggestion=#{suggestion},
+            <if test="weight != null">
+                weight=#{weight},
             </if>
-            <if test="evaluationTime != null">
-                evaluation_time=#{evaluationTime},
+            <if test="bloodPressure != null">
+                blood_pressure=#{bloodPressure},
             </if>
-            <if test="comprehensiveEvaluation != null">
-                comprehensive_evaluation=#{comprehensiveEvaluation},
+            <if test="heartRate != null">
+                heart_rate=#{heartRate},
+            </if>
+            <if test="measurementTime != null">
+                measurement_time=#{measurementTime},
+            </if>
+            <if test="recentDiet != null">
+                recent_diet=#{recentDiet},
             </if>
         </set>
         WHERE id=#{id}
@@ -73,28 +70,26 @@
 
     <!-- int count(); -->
     <select id="count" resultType="int">
-        SELECT count(*) FROM health_evaluation
+        SELECT count(*) FROM health_self_assessment
     </select>
 
-
-    <!-- int countByDepartment(String phone); -->
     <select id="countByDepartment" resultType="int">
-        SELECT count(*) FROM heahlth_evaluation WHERE countByDepartment=#{countByDepartment}
+        SELECT count(*) FROM health_self_assessment WHERE department=#{department}
     </select>
 
     <select id="standard" resultMap="StandardResultMap">
         SELECT
         <include refid="StandardQueryFields"/>
         FROM
-        health_evaluation
+        health_self_assessment
         WHERE
         id=#{id}
     </select>
 
     <sql id="StandardQueryFields">
         <if test="true">
-            id, account,name ,gender, age, physical_evaluation,
-            suggestion,evaluation_time,comprehensive_evaluation
+            id, account,name ,gender, age, physicalEvaluation,
+            suggestion,evaluationTime,comprehensiveEvaluation
         </if>
     </sql>
     <resultMap id="StandardResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.HealthEvaluationStandardVO">
@@ -114,15 +109,15 @@
         SELECT
         <include refid="ListQueryFields"/>
         FROM
-        health_evaluation
+        health_self_assessment
         ORDER BY
         id
     </select>
 
     <sql id="ListQueryFields">
         <if test="true">
-            id, account,name ,gender, age, physical_evaluation,
-            suggestion,evaluation_time,comprehensive_evaluation
+            id, account,name ,gender, age, physicalEvaluation,
+            suggestion,evaluationTime,comprehensiveEvaluation
         </if>
     </sql>
 

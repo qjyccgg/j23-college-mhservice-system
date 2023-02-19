@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class DoctorSection implements Serializable {
+public class Section implements Serializable {
     private Long id;
     private String sectionName;
     private Long doctorAmount;

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.asnc.college.mhservice.system.mapper.HealthReportMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        health_report (
+             student_account,student_name,student_gender,student_age,
+             report_file, health_condition, physical_condition
+        )VALUES (
+             #{studentAccount},#{studentName},#{studentGender},#{studentAge},
+             #{reportFile}, #{healthCondition}, #{physicalCondition}
+        )
+    </insert>
+
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        health_report (
+            student_account,student_name,student_gender,
+            student_age,report_file, health_condition, physical_condition
+        )VALUES
+        <foreach collection="list" item="healthReport" separator=",">
+            (
+            #{healthReport.studentAccount},#{healthReport.studentName},
+            #{healthReport.studentGender},#{healthReport.studentAge},#{healthReport.reportFile},
+             #{healthReport.healthCondition},#{healthReport.physicalCondition}
+            )
+        </foreach>
+
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM
+             health_report
+        WHERE
+              id = #{id};
+    </delete>
+
+    <delete id="deleteByIds">
+        DELETE FROM health_report WHERE id IN (
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+            )
+    </delete>
+
+    <update id="updateById">
+        UPDATE health_report
+        <set>
+            <if test="studentAccount != null">student_account=#{studentAccount}</if>
+            <if test="studentName != null">student_name=#{studentName}</if>
+            <if test="studentGender != null">student_gender=#{studentGender}</if>
+            <if test="studentAge != null">student_age=#{studentAge}</if>
+            <if test="reportFile != null">report_file=#{reportFile}</if>
+            <if test="healthCondition != null">health_condition=#{healthCondition}</if>
+            <if test="physicalCondition != null">physical_condition=#{physicalCondition}</if>
+        </set>
+        WHERE
+            id=#{id}
+    </update>
+
+    <!-- int count(); -->
+    <select id="count" resultType="int">
+        SELECT count(*)
+        FROM health_report
+    </select>
+
+    <select id="getStandardByStudentAccount" resultMap="StandardResultMap">
+        SELECT
+        <include refid="StandardQueryFields"/>
+        FROM
+            health_report
+        WHERE
+            student_account=#{studentAccount}
+    </select>
+
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+        health_report
+        ORDER BY
+        account, id DESC
+    </select>
+
+    <sql id="StandardQueryFields">
+        id,studentAccount,studentName,studentGender,studentAge,reportFile,healthCondition,physicalCondition
+    </sql>
+
+    <resultMap id="StandardResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.HealthReportStandardVO">
+        <id column="id" property="id"/>
+        <result column="student_account" property="studentAccount"/>
+        <result column="student_name" property="studentName"/>
+        <result column="student_gender" property="studentGender"/>
+        <result column="student_age" property="studentAge"/>
+        <result column="report_file" property="reportFile"/>
+        <result column="health_condition" property="healthCondition"/>
+        <result column="physical_condition" property="physicalCondition"/>
+    </resultMap>
+
+    <sql id="ListQueryFields">
+        id,studentAccount,studentName,studentGender,studentAge,reportFile,healthCondition,physicalCondition
+    </sql>
+
+    <resultMap id="ListResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.HealthReportListItemVO">
+        <id column="id" property="id"/>
+        <result column="student_account" property="studentAccount"/>
+        <result column="student_name" property="studentName"/>
+        <result column="student_gender" property="studentGender"/>
+        <result column="student_age" property="studentAge"/>
+        <result column="report_file" property="reportFile"/>
+        <result column="health_condition" property="healthCondition"/>
+        <result column="physical_condition" property="physicalCondition"/>
+    </resultMap>
+
+</mapper>

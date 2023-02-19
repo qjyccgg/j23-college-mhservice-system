@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.asnc.college.mhservice.system.mapper.SectionMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        section (
+            section_name, doctor_amount
+        ) VALUES (
+            #{sectionName}, #{doctorAmount}
+        )
+    </insert>
+
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO section (
+        section_name, doctor_amount
+        ) VALUES
+        <foreach collection="list" item="section" separator=",">
+            (
+            #{section.sectionName}, #{section.doctorAmount}
+            )
+        </foreach>
+
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM section WHERE id=#{id}
+    </delete>
+
+    <delete id="deleteByIds">
+        DELETE FROM section WHERE id IN (
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <update id="update">
+        UPDATE section
+        <set>
+            <if test="sectionName != null">
+                section_name=#{sectionName},
+            </if>
+            <if test="doctorAmount != null">
+                doctor_amount=#{doctorAmount},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!-- int count(); -->
+    <select id="count" resultType="int">
+        SELECT count(*) FROM section
+    </select>
+
+
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+            <include refid="ListQueryFields"/>
+        FROM
+            section
+        ORDER BY
+            id
+    </select>
+
+    <sql id="ListQueryFields">
+        <if test="true">
+            id, sectionName, doctorAmount
+        </if>
+    </sql>
+
+    <resultMap id="ListResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.SectionListItemVO">
+        <id column="id" property="id"/>
+        <result column="section_name" property="sectionName"/>
+        <result column="doctor_mount" property="doctorAmount"/>
+    </resultMap>
+
+
+</mapper>

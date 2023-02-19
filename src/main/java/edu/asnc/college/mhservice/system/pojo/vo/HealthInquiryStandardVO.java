@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Data
 public class HealthInquiryStandardVO implements Serializable {
     private Long id;
-    private Long studentId;
+    private Long studentAccount;
     private String inquiryContent;
     private String inquiryTime;
     private String doctorName;

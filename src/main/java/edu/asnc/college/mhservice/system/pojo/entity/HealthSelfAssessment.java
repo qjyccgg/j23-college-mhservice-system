@@ -10,10 +10,10 @@ import java.util.Date;
 public class HealthSelfAssessment implements Serializable {
 
     private Long id;
+    private String avatar;
     private String account;
     private String name;
     private String gender;
-    private String avatar;
     private String height;
     private String weight;
     private String bloodPressure;

@@ -1,13 +1,13 @@
-package edu.asnc.college.mhservice.system.pojo.entity;
+package edu.asnc.college.mhservice.system.pojo.vo;
 
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
-public class PhysicalData implements Serializable {
+public class PhysicalDataListItemVO implements Serializable {
+
     private Long id;
     private String studentAccount;
     private String studentName;
@@ -18,5 +18,4 @@ public class PhysicalData implements Serializable {
     private String testCondition;
     private Date testTime;
     private String note;
-    private LocalDateTime gmtCreate;
 }

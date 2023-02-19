@@ -1,4 +1,4 @@
-package edu.asnc.college.mhservice.system.pojo.entity;
+package edu.asnc.college.mhservice.system.pojo.vo;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class HealthReport implements Serializable {
+public class HealthReportListItemVO implements Serializable {
     private Long id;
     private String studentAccount;
     private String studentName;
@@ -15,7 +15,5 @@ public class HealthReport implements Serializable {
     private String reportFile;
     private String healthCondition;
     private String physicalCondition;
-    private LocalDateTime createTime;
     private LocalDateTime updateTime;
-
 }

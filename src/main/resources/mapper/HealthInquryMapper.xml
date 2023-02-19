@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.asnc.college.mhservice.system.mapper.HealthReportMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        health_inquiry (
+             student_account,inquiry_section,inquiry_content, inquiry_time, doctor_name,note
+        )VALUES (
+             #{studentAccount}, #{inquirySection},#{inquiryContent}, #{inquiryTime}, #{doctorName},#{note}
+        )
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM
+            health_inquiry
+        WHERE
+              id = #{id};
+    </delete>
+
+    <delete id="deleteByIds">
+        DELETE FROM health_inquiry WHERE id IN (
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+            )
+    </delete>
+
+    <update id="updateById">
+        UPDATE health_inquiry
+        <set>
+            <if test="studentAccount != null">student_account=#{studentAccount}</if>
+            <if test="inquirySection != null">inquiry_section=#{inquirySection}</if>
+            <if test="inquiryContent != null">inquiry_content=#{inquiryContent}</if>
+            <if test="inquiryTime != null">inquiry_time=#{inquiryTime}</if>
+            <if test="doctorName != null">doctor_name=#{doctorName}</if>
+            <if test="note != null">note=#{note}</if>
+        </set>
+        WHERE
+            id=#{id}
+    </update>
+
+    <!-- int count(); -->
+    <select id="count" resultType="int">
+        SELECT count(*)
+        FROM health_inquiry
+    </select>
+
+    <select id="getStandardByStudentAccount" resultMap="StandardResultMap">
+        SELECT
+        <include refid="StandardQueryFields"/>
+        FROM
+            health_inquiry
+        WHERE
+            student_account=#{studentAccount}
+    </select>
+
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+            health_inquiry
+        ORDER BY
+        studentAccount, id DESC
+    </select>
+
+    <sql id="StandardQueryFields">
+        id,studentAccount,inquirySection,inquiryContent,inquiryTime,doctorName,note
+    </sql>
+
+    <resultMap id="StandardResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.HealthInquiryStandardVO">
+        <id column="id" property="id"/>
+        <result column="student_account" property="studentAccount"/>
+        <result column="inquiry_section" property="inquirySection"/>
+        <result column="inquiry_content" property="inquiryContent"/>
+        <result column="inquiry_time" property="inquiryTime"/>
+        <result column="doctor_name" property="doctorName"/>
+        <result column="note" property="note"/>
+    </resultMap>
+
+    <sql id="ListQueryFields">
+        id,studentAccount,inquirySection,inquiryContent,inquiryTime,doctorName,note
+    </sql>
+
+    <resultMap id="ListResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.HealthInquiryListItemVO">
+        <id column="id" property="id"/>
+        <result column="student_account" property="studentAccount"/>
+        <result column="inquiry_section" property="inquirySection"/>
+        <result column="inquiry_content" property="inquiryContent"/>
+        <result column="inquiry_time" property="inquiryTime"/>
+        <result column="doctor_name" property="doctorName"/>
+        <result column="note" property="note"/>
+    </resultMap>
+
+</mapper>

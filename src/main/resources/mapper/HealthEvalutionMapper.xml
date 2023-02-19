@@ -13,7 +13,7 @@
                  )
     </insert>
 
-    <insert id="insertBatch">
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO health_evaluation (
         account, name , gender, age,physical_evaluation,
         suggestion,evaluation_time,comprehensive_evaluation

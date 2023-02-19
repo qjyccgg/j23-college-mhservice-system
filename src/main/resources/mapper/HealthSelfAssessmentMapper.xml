@@ -88,20 +88,24 @@
 
     <sql id="StandardQueryFields">
         <if test="true">
-            id, account,name ,gender, age, physicalEvaluation,
-            suggestion,evaluationTime,comprehensiveEvaluation
+            id, account,name ,gender, avatar, age,
+            height,weight,booldPressure,heartRate,measurementTime,
+            recentDiet
         </if>
     </sql>
-    <resultMap id="StandardResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.HealthEvaluationStandardVO">
+    <resultMap id="StandardResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.HealthSelfAssessmentStandardVO">
         <id column="id" property="id"/>
         <result column="account" property="account"/>
         <result column="name" property="name"/>
         <result column="gender" property="gender"/>
+        <result column="avatar" property="avatar"/>
         <result column="age" property="age"/>
-        <result column="physical_evaluation" property="physicalEvaluation"/>
-        <result column="suggestion" property="suggestion"/>
-        <result column="evaluation_time" property="evaluationTime"/>
-        <result column="comprehensive_evaluation" property="comprehensive_evaluation"/>
+        <result column="height" property="height"/>
+        <result column="weight" property="weight"/>
+        <result column="blood_pressure" property="bloodPressure"/>
+        <result column="heart_rate" property="heartRate"/>
+        <result column="measurement_time" property="measurementTime"/>
+        <result column="recent_diet" property="recentDiet"/>
     </resultMap>
 
 
@@ -116,21 +120,25 @@
 
     <sql id="ListQueryFields">
         <if test="true">
-            id, account,name ,gender, age, physicalEvaluation,
-            suggestion,evaluationTime,comprehensiveEvaluation
+            id, account,name ,gender, avatar, age,
+            height,weight,booldPressure,heartRate,messurementTime,
+            recentDiet
         </if>
     </sql>
 
-    <resultMap id="ListResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.HealthEvaluationListItemVO">
+    <resultMap id="ListResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.HealthSelfAssessmentListItemVO">
         <id column="id" property="id"/>
         <result column="account" property="account"/>
         <result column="name" property="name"/>
         <result column="gender" property="gender"/>
+        <result column="avatar" property="avatar"/>
         <result column="age" property="age"/>
-        <result column="physical_evaluation" property="physicalEvaluation"/>
-        <result column="suggestion" property="suggestion"/>
-        <result column="evaluation_time" property="evaluationTime"/>
-        <result column="comprehensive_evaluation" property="comprehensive_evaluation"/>
+        <result column="height" property="height"/>
+        <result column="weight" property="weight"/>
+        <result column="blood_pressure" property="bloodPressure"/>
+        <result column="heart_rate" property="heartRate"/>
+        <result column="measurement_time" property="measurementTime"/>
+        <result column="recent_diet" property="recentDiet"/>
     </resultMap>
 
 

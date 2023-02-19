@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class HealthInquiry implements Serializable {
     private Long id;
-    private Long studentId;
+    private Long studentAccount;
     private String inquiryContent;
     private String inquiryTime;
     private String doctorName;

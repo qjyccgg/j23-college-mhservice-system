@@ -18,7 +18,7 @@ public interface HealthSelfAssessmentMapper {
 
     int count();
 
-    int countByDepartment(String department);
+    //int countByDepartment(String department);
 
     HealthSelfAssessmentStandardVO getStandardById(Long id);
 

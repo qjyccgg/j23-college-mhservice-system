@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.asnc.college.mhservice.system.mapper.PhysicalDataMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        physical_data (
+             student_account,student_name,student_gender,student_age,
+             subject_type, test_item, test_condition,test_time
+        )VALUES (
+             #{studentAccount},#{studentName},#{studentGender},#{studentAge},
+             #{subjectType}, #{testItem}, #{testCondition},#{testTime}
+        )
+    </insert>
+
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        physical_data (
+            student_account,student_name,student_gender,
+            student_age,subject_type, test_item, test_condition,test_time
+        )VALUES
+        <foreach collection="list" item="physicalData" separator=",">
+            (
+            #{physicalData.studentAccount},#{physicalData.studentName},
+            #{physicalData.studentGender},#{physicalData.studentAge},#{physicalData.subjectType},
+             #{physicalData.testItem},#{physicalData.testCondition},#{physicalData.testTime}
+            )
+        </foreach>
+
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM
+            physical_data
+        WHERE
+              id = #{id};
+    </delete>
+
+    <delete id="deleteByIds">
+        DELETE FROM physical_data WHERE id IN (
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+            )
+    </delete>
+
+    <update id="updateById">
+        UPDATE physical_data
+        <set>
+            <if test="studentAccount != null">student_account=#{studentAccount}</if>
+            <if test="studentName != null">student_name=#{studentName}</if>
+            <if test="studentGender != null">student_gender=#{studentGender}</if>
+            <if test="studentAge != null">student_age=#{studentAge}</if>
+            <if test="subjectType != null">subject_type=#{subjectType}</if>
+            <if test="testItem != null">test_item=#{testItem}</if>
+            <if test="testCondition != null">test_condition=#{testCondition}</if>
+            <if test="testTime != null">test_time=#{testTime}</if>
+        </set>
+        WHERE
+            id=#{id}
+    </update>
+
+    <!-- int count(); -->
+    <select id="count" resultType="int">
+        SELECT
+               count(*)
+        FROM
+             physical_data
+    </select>
+
+    <select id="getStandardByStudentAccount" resultMap="StandardResultMap">
+        SELECT
+        <include refid="StandardQueryFields"/>
+        FROM
+            physical_data
+        WHERE
+            student_account=#{studentAccount}
+    </select>
+
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+            physical_data
+        ORDER BY
+            studentAccount, id DESC
+    </select>
+
+    <sql id="StandardQueryFields">
+        id,studentAccount,studentName,studentGender,studentAge,
+        subjectType, testItem, testCondition,testTime
+    </sql>
+
+    <resultMap id="StandardResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.PhysicalDataStandardVO">
+        <id column="id" property="id"/>
+        <result column="student_account" property="studentAccount"/>
+        <result column="student_name" property="studentName"/>
+        <result column="student_gender" property="studentGender"/>
+        <result column="student_age" property="studentAge"/>
+        <result column="subject_type" property="subjectType"/>
+        <result column="test_item" property="testItem"/>
+        <result column="test_condition" property="testCondition"/>
+        <result column="test_time" property="testTime"/>
+    </resultMap>
+
+    <sql id="ListQueryFields">
+        id,studentAccount,studentName,studentGender,studentAge,
+        subjectType, testItem, testCondition,testTime
+    </sql>
+
+    <resultMap id="ListResultMap" type="edu.asnc.college.mhservice.system.pojo.vo.PhysicalDataListItemVO">
+        <id column="id" property="id"/>
+        <result column="student_account" property="studentAccount"/>
+        <result column="student_name" property="studentName"/>
+        <result column="student_gender" property="studentGender"/>
+        <result column="student_age" property="studentAge"/>
+        <result column="subject_type" property="subjectType"/>
+        <result column="test_item" property="testItem"/>
+        <result column="test_condition" property="testCondition"/>
+        <result column="test_time" property="testTime"/>
+    </resultMap>
+
+</mapper>

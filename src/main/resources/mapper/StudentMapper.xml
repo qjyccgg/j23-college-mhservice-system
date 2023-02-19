@@ -3,7 +3,7 @@
 
 <mapper namespace="edu.asnc.college.mhservice.system.mapper.StudentMapper">
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO student (
             name, account,password,department,gender,age,avatar,email,phone
         ) VALUES (
@@ -11,7 +11,7 @@
         )
     </insert>
 
-    <insert id="insertBatch">
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO student (
             name, account,password,department,gender,age,avatar,email,phone
         ) VALUES

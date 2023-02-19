@@ -49,7 +49,7 @@ public interface StudentMapper {
      * @param account 学生账号
      * @return
      */
-    StudentStandardVO getStandardByAccount(Long account);
+    StudentStandardVO getStandardByAccount(String account);
 
     /**
      * 查询学生数据列表

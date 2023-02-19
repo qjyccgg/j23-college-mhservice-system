@@ -12,7 +12,7 @@
                  )
     </insert>
 
-    <insert id="insertBatch">
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO admin (
         username, password, role, avatar,phone, email
         ) VALUES
